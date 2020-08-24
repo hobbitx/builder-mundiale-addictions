@@ -9,7 +9,7 @@ export default class Utils {
 
     public static getRandomIdentifier = () => Math.random().toString(36).substr(2, 9);
 
-    public static getUrl = (path: string) => Utils.getBrowser().extension.getURL(path);
+    public static getUrl = (path: string) => Utils.getBrowser().runtime.getURL(path);
 
     public static sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 

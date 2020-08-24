@@ -1,8 +1,8 @@
 ## Installation
 
-The extension is available in some browser stores.
+This extension is a modification based on the code https://github.com/ceifa/blip-builder-additions-extension
 
-**Google Chrome:** https://chrome.google.com/webstore/detail/builder-addictions/nfdmafhaljeeonfglijopeoicnnpgleb
+**Google Chrome:** *Sometimes, but not now*
 
 **Mozilla Firefox:** *Sometimes, but not now*
 
@@ -19,9 +19,11 @@ The extension is available in some browser stores.
 
 ### Get the code
 
+
+
 ```
-$ git clone https://github.com/ceifa/blip-builder-additions-extension/
-$ cd blip-builder-additions-extension
+$ git clone https://github.com/hobbitx/builder-mundiale-addictions
+$ cd builder-mundiale-addictions
 $ npm i
 ```
 

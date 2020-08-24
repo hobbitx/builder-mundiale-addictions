@@ -31,14 +31,25 @@ export default class AutoTag extends FeatureBase {
     }   
     private addInputs = async () => {
         const tagName = "ASK";
+        const error500 = "ERROR - 500";
+        const error400 = "ERROR - 400";
         const inputAwait: [] = await inject.getVariable('editingState');
         const hasInput = this.getStateInput(inputAwait);
         if(hasInput){
             this.AddAskTag(tagName);
         }
+        const tab = document.getElementById("node-content-tab");
+        const header = tab.getElementsByClassName("sidebar-content-header")[0];
+        let title =  header.getElementsByTagName("input")[0];
+        if(title.value.includes(error400)){
+            this.AddAskTag(error400);
+        }
+        if(title.value.includes(error500)){
+            this.AddAskTag(error500);
+        }
         else{
-        const tagElements = Array.from(document.querySelectorAll(".sidebar-content-header .blip-tag__label"));
-        const correctTagElement = tagElements.find((t) => t.textContent.trim() === this.getCorrectName(tagName));
+            const tagElements = Array.from(document.querySelectorAll(".sidebar-content-header .blip-tag__label"));
+            const correctTagElement = tagElements.find((t) => t.textContent.trim() === this.getCorrectName(tagName));
             if (correctTagElement && correctTagElement.nextElementSibling) {
                 (correctTagElement.nextElementSibling as HTMLElement).click();
             }
@@ -69,6 +80,7 @@ export default class AutoTag extends FeatureBase {
         const shouldFixActions = actions.filter((a) => !tags.includes(a));
         shouldFixActions.forEach(this.AddTag);
     }
+    
     private getCorrectName= (tagName: string) =>{
         if(tagName == "ProcessHttp"){
             return "API";
@@ -82,6 +94,7 @@ export default class AutoTag extends FeatureBase {
 
         return 'false';
     }
+
     private getStateInput = (state: any) => {
         return state.$contentActions.find((a: any) => a.input && !a.input.bypass);
     }
@@ -93,14 +106,11 @@ export default class AutoTag extends FeatureBase {
             (correctTagElement.nextElementSibling as HTMLElement).click();
         }
     }
+
     private AddAskTag = async (tagName: string) => {
-        const hasTag = this.getCorrectName(tagName);
         const tagElements = Array.from(document.querySelectorAll(".sidebar-content-header .blip-tag__label"));
-        const correctTagElement = tagElements.find((t) => t.textContent.trim() === this.getCorrectName(tagName));
+        const correctTagElement = tagElements.find((t) => t.textContent.trim() === tagName);
         if (correctTagElement && correctTagElement.nextElementSibling) {
-            return;
-        }
-        if(hasTag === 'false'){
             return;
         }
         const tab = document.getElementById("node-content-tab");
@@ -115,7 +125,7 @@ export default class AutoTag extends FeatureBase {
         const tagMenu = header.getElementsByTagName("blip-tags")[0];
         
         const input = tagMenu.getElementsByTagName("input")[0];
-        input.value = this.getCorrectName(tagName);
+        input.value = tagName;
         await Utils.sleep(30);
         
         var event = new Event('input', {
@@ -164,8 +174,12 @@ export default class AutoTag extends FeatureBase {
         }
 
     }
-    private AddTag = async (tagName: string) => {
 
+    private AddTag = async (tagName: string) => {
+        
+        if(this.getCorrectName(tagName) === 'false'){
+            return;
+        }
         const tab = document.getElementById("node-content-tab");
 
         const header = tab.getElementsByClassName("sidebar-content-header")[0];

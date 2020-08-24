@@ -66,6 +66,18 @@
                     <input type="hidden" config="autotag.userinput" default="#61D36F"
                         event-change="changeDisplayTagColor" />
                 </div>
+                <div class="tag-section">
+                    <span>ERROR - 400</span>
+                    <span class="color-picker-action right-margin--small" event-click="openColorChooseDialog"></span>
+                    <input type="hidden" config="autotag.error400" default="#FF4A1E"
+                        event-change="changeDisplayTagColor" />
+                </div> 
+                <div class="tag-section">
+                    <span>ERROR - 500</span>
+                    <span class="color-picker-action right-margin--small" event-click="openColorChooseDialog"></span>
+                    <input type="hidden" config="autotag.error500" default="#FF961E"
+                        event-change="changeDisplayTagColor" />
+                </div>
                 <ul class="blip-tag-select-color" id="tag-color-selector">
                     <li style="background: #0CC7CB" color="#0CC7CB" class="blip-tag-color-option"
                         event-click="changeInputTagColor"></li>

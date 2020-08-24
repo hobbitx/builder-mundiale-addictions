@@ -38,7 +38,7 @@ export default class AutoTag extends FeatureBase {
         }
         else{
         const tagElements = Array.from(document.querySelectorAll(".sidebar-content-header .blip-tag__label"));
-        const correctTagElement = tagElements.find((t) => t.textContent.trim() === tagName);
+        const correctTagElement = tagElements.find((t) => t.textContent.trim() === this.getCorrectName(tagName));
             if (correctTagElement && correctTagElement.nextElementSibling) {
                 (correctTagElement.nextElementSibling as HTMLElement).click();
             }
@@ -80,7 +80,7 @@ export default class AutoTag extends FeatureBase {
             return "REDIRECT - SERVICE";
         }
 
-        return tagName;
+        return 'false';
     }
     private getStateInput = (state: any) => {
         return state.$contentActions.find((a: any) => a.input && !a.input.bypass);
@@ -94,9 +94,13 @@ export default class AutoTag extends FeatureBase {
         }
     }
     private AddAskTag = async (tagName: string) => {
+        const hasTag = this.getCorrectName(tagName);
         const tagElements = Array.from(document.querySelectorAll(".sidebar-content-header .blip-tag__label"));
-        const correctTagElement = tagElements.find((t) => t.textContent.trim() === tagName);
+        const correctTagElement = tagElements.find((t) => t.textContent.trim() === this.getCorrectName(tagName));
         if (correctTagElement && correctTagElement.nextElementSibling) {
+            return;
+        }
+        if(hasTag === 'false'){
             return;
         }
         const tab = document.getElementById("node-content-tab");

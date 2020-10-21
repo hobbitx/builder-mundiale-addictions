@@ -4,26 +4,24 @@
     "manifest_version": 2,
     "description": "Extensão para facilitar a visualização das funcionalidades do Blip Builder.",
     "icons": {
-        "128": "./manifest/images/icon-128px.png",
-        "48": "./manifest/images/icon-48px.png",
-        "32": "./manifest/images/icon-32px.png",
-        "16": "./manifest/images/icon.png"
+        "128": "./manifest/images/logo-mundiale.png",
+        "48": "./manifest/images/logo-mundiale.png",
+        "32": "./manifest/images/logo-mundiale.png",
+        "16": "./manifest/images/logo-mundiale.png"
     },
     "browser_action": {
-        "default_icon": "./manifest/images/icon.png",
+        "default_icon": "./manifest/images/logo-mundiale.png",
         "default_popup": "./pages/popup.html"
     },
-    "content_scripts": [
-        {
-            "run_at": "document_end",
-            "matches": [
-                "*://*.blip.ai/*"
-            ],
-            "js": [
-                "./js/content.js"
-            ]
-        }
-    ],
+    "content_scripts": [{
+        "run_at": "document_end",
+        "matches": [
+            "*://*.blip.ai/*"
+        ],
+        "js": [
+            "./js/content.js"
+        ]
+    }],
     "background": {
         "scripts": [
             "/js/background.js"

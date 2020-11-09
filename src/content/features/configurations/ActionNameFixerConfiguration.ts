@@ -4,34 +4,55 @@ import IConfiguration from "./Configuration";
 
 export default class ActionNameFixerConfiguration implements IConfiguration {
     private readonly possibleActions = [
-    {
-        alias: ["Registro de eventos", "Event tracking"],
-        name: "TrackEvent",
-        nameResolver: (settings: any) => `Track "${settings.category}"`,
-    }, {
-        alias: ["Executar script", "Execute script"],
-        name: "ExecuteScript",
-        nameResolver: (settings: any) => `Execute script - "${settings.outputVariable}"`,
-    }, {
-        alias: ["Redirecionar a um serviço", "Redirect to service"],
-        name: "Redirect",
-        nameResolver: (settings: any) => `Redirect to service - "${settings.address}"`,
-    },{
-        alias: ["Requisição HTTP", "Process HTTP"],
-        name: "ProcessHttp",
-        nameResolver: (settings: any) => `Process HTTP - "${this.clearURI(settings.uri)}"`,
-    }, {
-        alias: ["Definir variável", "Set variable"],
-        name: "SetVariable",
-        nameResolver: (settings: any) => `Set variable - "${settings.variable}"`,
-    }];
+        {
+            alias: ["Registro de eventos", "Event tracking"],
+            name: "TrackEvent",
+            nameResolver: (settings: any) => `Track ${settings.category}`,
+        }, {
+            alias: ["Executar script", "Execute script"],
+            name: "ExecuteScript",
+            nameResolver: (settings: any) => `Execute script - ${settings.outputVariable}`,
+        }, {
+            alias: ["Redirecionar a um serviço", "Redirect to service"],
+            name: "Redirect",
+            nameResolver: (settings: any) => `Redirect to service - ${settings.address}`,
+        }, {
+            alias: ["Requisição HTTP", "Process HTTP"],
+            name: "ProcessHttp",
+            nameResolver: (settings: any) => `Request HTTP - ${this.clearURI(settings.uri)}`,
+        }, {
+            alias: ["Definir variável", "Set variable"],
+            name: "SetVariable",
+            nameResolver: (settings: any) => `Set variable - ${settings.variable}`,
+        }];
 
     public onLoadConfiguration = (): void => {
         document.getElementById("fix-action-names-apply-btn").addEventListener("click", this.handleFixActionNames);
     }
-    private clearURI = (uri:string): string => {
-        var newUri = uri.replace(/({{)(\w*(.)*)(}})/gi,"");
-        newUri = newUri.replace("/leads","");
+    private clearURI = (uri: string): string => {
+        var newUri = uri;
+        try {
+            
+            newUri = uri.replace(/({{)(\w*(.)*)(}})/gi, "");
+            newUri = newUri.replace("/leads", "");
+            newUri = newUri.replace(/[/]/g, " ");
+            if(newUri.includes("google-analytics")){
+                newUri = "GOOGLE ANALYSTICS";
+            }
+            if(newUri.includes("welcome-messages/exists")){
+                newUri = "isPostbackJs";
+            }
+            if(newUri.includes("/process-message")){
+                newUri = "build";
+            }
+            if(newUri.includes("/commands")){
+                newUri = "save extras";
+            } if(newUri.includes("loggly")){
+                newUri = "loggly";
+            }
+        }
+        catch (e) {
+        }
         return newUri;
     }
     private handleFixActionNames = async () => {
@@ -55,14 +76,20 @@ export default class ActionNameFixerConfiguration implements IConfiguration {
 
             await inject.callFunction("LoadingService", "stopLoading", []);
             await inject.callFunction("ngToast", "danger",
-                ["Error when trying to apply action names. (Maybe nothing has been applied)"]);
+                [`Error when trying to apply action names. "${e}"`]);
         }
     }
 
     private replaceActionNameIfDefault = (action: any) => {
-        const actionNameResolver = this.possibleActions.find((p) => p.name === action.type);
-        if (actionNameResolver.alias.includes(action.$title)) {
-            action.$title = actionNameResolver.nameResolver(action.settings).substring(0, 50);
+        try {
+            const actionNameResolver = this.possibleActions.find((p) => p.name === action.type);
+            if(actionNameResolver != undefined){   
+                action.$title = actionNameResolver.nameResolver(action.settings);
+            }
+           
+        }
+        catch (e) {
+
         }
         return action;
     }

@@ -3,45 +3,37 @@ import { inject } from "../../Content";
 import IConfiguration from "./Configuration";
 
 export default class ActionNameFixerConfiguration implements IConfiguration {
-    private readonly possibleActions = [{
+    private readonly possibleActions = [
+    {
         alias: ["Registro de eventos", "Event tracking"],
         name: "TrackEvent",
         nameResolver: (settings: any) => `Track "${settings.category}"`,
     }, {
         alias: ["Executar script", "Execute script"],
         name: "ExecuteScript",
-        nameResolver: (settings: any) => `Process "${settings.outputVariable}"`,
-    }, {
-        alias: ["Gerenciar lista de distribuição", "Manage distribution list"],
-        name: "ManageList",
-        nameResolver: (settings: any) => `${settings.action} ${settings.action === "Add" ? "to" : "from"}
-            list "${settings.listName.replace("@broadcast.msging.net", "")}"`,
+        nameResolver: (settings: any) => `Execute script - "${settings.outputVariable}"`,
     }, {
         alias: ["Redirecionar a um serviço", "Redirect to service"],
         name: "Redirect",
-        nameResolver: (settings: any) => `Redirect to "${settings.address}"`,
-    }, {
-        alias: ["Definir contato", "Set contact"],
-        name: "MergeContact",
-        nameResolver: (settings: any) => `Set ${Object.keys(settings).join(", ")} to contact`,
-    }, {
+        nameResolver: (settings: any) => `Redirect to service - "${settings.address}"`,
+    },{
         alias: ["Requisição HTTP", "Process HTTP"],
         name: "ProcessHttp",
-        nameResolver: (settings: any) => `Process "${settings.responseBodyVariable}" using "${settings.method}"`,
+        nameResolver: (settings: any) => `Process HTTP - "${this.clearURI(settings.uri)}"`,
     }, {
         alias: ["Definir variável", "Set variable"],
         name: "SetVariable",
-        nameResolver: (settings: any) => `Set "${settings.variable}" to "${settings.value}"`,
-    }, {
-        alias: ["Processar comando", "Process command"],
-        name: "ProcessCommand",
-        nameResolver: (settings: any) => `Process "${settings.method.toUpperCase()}" to "${settings.uri}"`,
+        nameResolver: (settings: any) => `Set variable - "${settings.variable}"`,
     }];
 
     public onLoadConfiguration = (): void => {
         document.getElementById("fix-action-names-apply-btn").addEventListener("click", this.handleFixActionNames);
     }
-
+    private clearURI = (uri:string): string => {
+        var newUri = uri.replace(/({{)(\w*(.)*)(}})/gi,"");
+        newUri = newUri.replace("/leads","");
+        return newUri;
+    }
     private handleFixActionNames = async () => {
         try {
             await inject.callFunction("LoadingService", "startLoading", [false]);

@@ -33,19 +33,28 @@ export default class AutoTag extends FeatureBase {
         const tagName = "ASK";
         const error500 = "ERROR - 500";
         const error400 = "ERROR - 400";
+        const intentName = "INTENT";
+        const step = "STEP"
         const inputAwait: [] = await inject.getVariable('editingState');
         const hasInput = this.getStateInput(inputAwait);
-        if(hasInput){
+        const hasStep = this.getStateStep(inputAwait);
+        if(hasInput && this.haveTags(inputAwait,tagName)){
             this.AddAskTag(tagName);
+        }
+        if(hasStep && this.haveTags(inputAwait,step)){
+            this.AddAskTag(step);
         }
         const tab = document.getElementById("node-content-tab");
         const header = tab.getElementsByClassName("sidebar-content-header")[0];
         let title =  header.getElementsByTagName("input")[0];
-        if(title.value.includes(error400)){
+        if(title.value.includes(error400) && this.haveTags(inputAwait,error400)){
             this.AddAskTag(error400);
         }
-        if(title.value.includes(error500)){
+        if(title.value.includes(error500) && this.haveTags(inputAwait,error500)){
             this.AddAskTag(error500);
+        }
+        if(title.value.includes(intentName) && this.haveTags(inputAwait,intentName)){
+            this.AddAskTag(intentName);
         }
         else{
             const tagElements = Array.from(document.querySelectorAll(".sidebar-content-header .blip-tag__label"));
@@ -98,7 +107,22 @@ export default class AutoTag extends FeatureBase {
     private getStateInput = (state: any) => {
         return state.$contentActions.find((a: any) => a.input && !a.input.bypass);
     }
-
+    private getStateStep = (state: any) => {
+        state.$contentActions.forEach((element: any) => {
+            if(element.settings.uri.includes("Step")){
+                return true;
+            }
+        });
+        return false;
+    }
+    private haveTags = (state: any,tag: string) => {
+        state.$tags.forEach((element: any) => {
+            if(element.label.toLowerCase() == tag.toLowerCase()){
+                return true;
+            }
+        });
+        return false
+    }
     private RemoveTag = (tagName: string) => {
         const tagElements = Array.from(document.querySelectorAll(".sidebar-content-header .blip-tag__label"));
         const correctTagElement = tagElements.find((t) => t.textContent.trim() === this.getCorrectName(tagName));

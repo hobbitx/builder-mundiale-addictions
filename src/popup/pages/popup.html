@@ -18,22 +18,6 @@
                 </label>
                 <img class="icon-config right-margin--small clickable" src="../img/gear.png" />
             </div>
-            <div class="inner-size--medium flex-center" feature="whatsappmarkdown">
-                <label class="mb2 flex-center">
-                    <input class="bp-input" type="checkbox" id="cleanenvironment" config="cleanenvironment.enabled"
-                        default="false">
-                    <div class="bp-input--checkbox">&check;</div>
-                    <label class="label settings-label" for="cleanenvironment">Clean Environment</label>
-                </label>
-            </div>
-            <div class="inner-size--medium flex-center" feature="whatsappmarkdown">
-                <label class="mb2 flex-center">
-                    <input class="bp-input" type="checkbox" id="whatsappmarkdown" config="whatsappmarkdown.enabled"
-                        default="false">
-                    <div class="bp-input--checkbox">&check;</div>
-                    <label class="label settings-label" for="whatsappmarkdown">Whatsapp Markdown</label>
-                </label>
-            </div>
         </div>
         <div id="settings" class="invisible">
             <h3>
@@ -43,66 +27,57 @@
             <div feature="autotag">
                 <div class="tag-section">
                     <span>SCRIPT</span>
-                    <span class="color-picker-action right-margin--small" id="execute-script-view"
-                        event-click="openColorChooseDialog"></span>
-                    <input type="hidden" config="autotag.executescript" default="#FF1E90"
-                        event-change="changeDisplayTagColor" />
+                    <span class="color-picker-action right-margin--small" id="execute-script-view" event-click="openColorChooseDialog"></span>
+                    <input type="hidden" config="autotag.executescript" default="#FF1E90" event-change="changeDisplayTagColor" />
                 </div>
                 <div class="tag-section">
                     <span>REDIRECT - SERVICE</span>
                     <span class="color-picker-action right-margin--small" event-click="openColorChooseDialog"></span>
-                    <input type="hidden" config="autotag.redirect" default="#7762E3"
-                        event-change="changeDisplayTagColor" />
+                    <input type="hidden" config="autotag.redirect" default="#7762E3" event-change="changeDisplayTagColor" />
                 </div>
                 <div class="tag-section">
                     <span>API</span>
                     <span class="color-picker-action right-margin--small" event-click="openColorChooseDialog"></span>
-                    <input type="hidden" config="autotag.processhttp" default="#1EA1FF"
-                        event-change="changeDisplayTagColor" />
+                    <input type="hidden" config="autotag.processhttp" default="#1EA1FF" event-change="changeDisplayTagColor" />
                 </div>
                 <div class="tag-section">
                     <span>ASK</span>
                     <span class="color-picker-action right-margin--small" event-click="openColorChooseDialog"></span>
-                    <input type="hidden" config="autotag.userinput" default="#61D36F"
-                        event-change="changeDisplayTagColor" />
+                    <input type="hidden" config="autotag.userinput" default="#61D36F" event-change="changeDisplayTagColor" />
+                </div>
+                <div class="tag-section">
+                    <span>STEP</span>
+                    <span class="color-picker-action right-margin--small" event-click="openColorChooseDialog"></span>
+                    <input type="hidden" config="autotag.step" default="#1EDEFF" event-change="changeDisplayTagColor" />
+                </div>
+                <div class="tag-section">
+                    <span>INTENT</span>
+                    <span class="color-picker-action right-margin--small" event-click="openColorChooseDialog"></span>
+                    <input type="hidden" config="autotag.intent" default="#FC91AE" event-change="changeDisplayTagColor" />
                 </div>
                 <div class="tag-section">
                     <span>ERROR - 400</span>
                     <span class="color-picker-action right-margin--small" event-click="openColorChooseDialog"></span>
-                    <input type="hidden" config="autotag.error400" default="#FF4A1E"
-                        event-change="changeDisplayTagColor" />
-                </div> 
+                    <input type="hidden" config="autotag.error400" default="#FF4A1E" event-change="changeDisplayTagColor" />
+                </div>
                 <div class="tag-section">
                     <span>ERROR - 500</span>
                     <span class="color-picker-action right-margin--small" event-click="openColorChooseDialog"></span>
-                    <input type="hidden" config="autotag.error500" default="#FF961E"
-                        event-change="changeDisplayTagColor" />
+                    <input type="hidden" config="autotag.error500" default="#FF961E" event-change="changeDisplayTagColor" />
                 </div>
                 <ul class="blip-tag-select-color" id="tag-color-selector">
-                    <li style="background: #0CC7CB" color="#0CC7CB" class="blip-tag-color-option"
-                        event-click="changeInputTagColor"></li>
-                    <li style="background: #FF4A1E" color="#FF4A1E" class="blip-tag-color-option"
-                        event-click="changeInputTagColor"></li>
-                    <li style="background: #FF6F1E" color="#FF6F1E" class="blip-tag-color-option"
-                        event-click="changeInputTagColor"></li>
-                    <li style="background: #FF961E" color="#FF961E" class="blip-tag-color-option"
-                        event-click="changeInputTagColor"></li>
-                    <li style="background: #1EDEFF" color="#1EDEFF" class="blip-tag-color-option"
-                        event-click="changeInputTagColor"></li>
-                    <li style="background: #1EA1FF" color="#1EA1FF" class="blip-tag-color-option"
-                        event-click="changeInputTagColor"></li>
-                    <li style="background: #61D36F" color="#61D36F" class="blip-tag-color-option"
-                        event-click="changeInputTagColor"></li>
-                    <li style="background: #37C5AB" color="#37C5AB" class="blip-tag-color-option"
-                        event-click="changeInputTagColor"></li>
-                    <li style="background: #7762E3" color="#7762E3" class="blip-tag-color-option"
-                        event-click="changeInputTagColor"></li>
-                    <li style="background: #EA4D9C" color="#EA4D9C" class="blip-tag-color-option"
-                        event-click="changeInputTagColor"></li>
-                    <li style="background: #FC91AE" color="#FC91AE" class="blip-tag-color-option"
-                        event-click="changeInputTagColor"></li>
-                    <li style="background: #FF1E90" color="#FF1E90" class="blip-tag-color-option"
-                        event-click="changeInputTagColor"></li>
+                    <li style="background: #0CC7CB" color="#0CC7CB" class="blip-tag-color-option" event-click="changeInputTagColor"></li>
+                    <li style="background: #FF4A1E" color="#FF4A1E" class="blip-tag-color-option" event-click="changeInputTagColor"></li>
+                    <li style="background: #FF6F1E" color="#FF6F1E" class="blip-tag-color-option" event-click="changeInputTagColor"></li>
+                    <li style="background: #FF961E" color="#FF961E" class="blip-tag-color-option" event-click="changeInputTagColor"></li>
+                    <li style="background: #1EDEFF" color="#1EDEFF" class="blip-tag-color-option" event-click="changeInputTagColor"></li>
+                    <li style="background: #1EA1FF" color="#1EA1FF" class="blip-tag-color-option" event-click="changeInputTagColor"></li>
+                    <li style="background: #61D36F" color="#61D36F" class="blip-tag-color-option" event-click="changeInputTagColor"></li>
+                    <li style="background: #37C5AB" color="#37C5AB" class="blip-tag-color-option" event-click="changeInputTagColor"></li>
+                    <li style="background: #7762E3" color="#7762E3" class="blip-tag-color-option" event-click="changeInputTagColor"></li>
+                    <li style="background: #EA4D9C" color="#EA4D9C" class="blip-tag-color-option" event-click="changeInputTagColor"></li>
+                    <li style="background: #FC91AE" color="#FC91AE" class="blip-tag-color-option" event-click="changeInputTagColor"></li>
+                    <li style="background: #FF1E90" color="#FF1E90" class="blip-tag-color-option" event-click="changeInputTagColor"></li>
                 </ul>
             </div>
         </div>

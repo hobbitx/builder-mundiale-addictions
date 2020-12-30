@@ -5,11 +5,13 @@ import ActionNameFixerConfiguration from "./ActionNameFixerConfiguration";
 import IConfiguration from "./Configuration";
 import EventTrackConfiguration from "./EventTrackConfiguration";
 import LoopIdentifierConfiguration from "./LoopIdentifierConfiguration";
+import FlowAnalysisConfiguration from "./FlowAnalysisConfiguration";
 
 export const configurations: IConfiguration[] = [
     new EventTrackConfiguration(),
     new LoopIdentifierConfiguration(),
     new ActionNameFixerConfiguration(),
+    new FlowAnalysisConfiguration()
 ];
 
 export default class ConfigurationManager extends FeatureBase {

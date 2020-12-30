@@ -3,6 +3,8 @@ import { inject } from "../Content";
 import FeatureBase from "./FeatureBase";
 
 export default class AutoTag extends FeatureBase {
+    private readonly error500Names = [ "error500", "error-500","error 500"]
+    private readonly error400Names =  ["error400", "error - 400","error 400"]
     public onLoadBuilder(): void {
         this.startAsync();
     }
@@ -26,6 +28,9 @@ export default class AutoTag extends FeatureBase {
 
     }
     private addInputs = async () => {
+        if (!this.isEnabled) {
+            return;
+        }
         const tagName = "ASK";
         const error500 = "ERROR - 500";
         const error400 = "ERROR - 400";
@@ -43,10 +48,10 @@ export default class AutoTag extends FeatureBase {
         const tab = document.getElementById("node-content-tab");
         const header = tab.getElementsByClassName("sidebar-content-header")[0];
         let title = header.getElementsByTagName("input")[0];
-        if (title.value.toLocaleLowerCase().includes(error400.toLocaleLowerCase()) && !this.haveTags(inputAwait, error400)) {
+        if (this.error400Names.find((p) => title.value.toLocaleLowerCase().includes(p.toLocaleLowerCase())) && !this.haveTags(inputAwait, error400)) {
             this.AddAskTag(error400);
         }
-        if (title.value.toLocaleLowerCase().includes(error500.toLocaleLowerCase()) && !this.haveTags(inputAwait, error500)) {
+        if (this.error500Names.find((p) => title.value.toLocaleLowerCase().includes(p.toLocaleLowerCase())) && !this.haveTags(inputAwait, error500)) {
             this.AddAskTag(error500);
         }
         if (title.value.toLocaleLowerCase().includes(intentName.toLocaleLowerCase()) && !this.haveTags(inputAwait, intentName)) {
@@ -119,6 +124,11 @@ export default class AutoTag extends FeatureBase {
 
         }
         return find;
+    }
+
+    
+    private isStateError500 = (name: string) => {
+        
     }
     private haveTags = (state: any, tag: string) => {
         var find = false;
@@ -206,7 +216,6 @@ export default class AutoTag extends FeatureBase {
         }
 
     }
-
     private AddTag = async (tagName: string) => {
 
         if (this.getCorrectName(tagName) === 'false') {
